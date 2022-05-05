@@ -1,0 +1,16 @@
+footer{
+    margin-top: auto;
+    background-color: #2f2f2f;
+    padding: 20px;
+    width: 100%;
+}
+
+p{
+    text-align: center;
+    color: white;
+}
+
+.redirect{
+    cursor: pointer;
+    font-weight: 800;
+}
