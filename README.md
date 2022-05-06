@@ -5,7 +5,7 @@
 
 _________________________________________________________________________________________________________________________________________
 
---Moments is a website where a person can share his/her special moments with others and can checkout other people moments with a blink of a click.
+--Moments is a website where a person can share his/her special moments with others and checkout what others have shared with a click.
 
 Here are some of the snapshots :
 
