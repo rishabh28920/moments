@@ -5,7 +5,7 @@ import axios from "axios";
 
 function Post({post}) {
     
-    const PF = "http://localhost:5000/images/"
+    const PF = "https://moments-backend-one.vercel.app/images/"
     return (
         <div className="post">
             {post.photo && (

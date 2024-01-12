@@ -5,7 +5,7 @@ import "./topbar.css";
 
 export default function TopBar() {
   const { user, dispatch } = useContext(Context);
-  const PF = "https://localhost:5000/images/"
+  const PF = "https://moments-backend-one.vercel.app/images/"
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
