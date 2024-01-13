@@ -21,6 +21,7 @@
   justify-content: center;
   font-size: 70px;
   display: block ;
+  margin-bottom: 10px;
 
 }
 
@@ -35,6 +36,7 @@
   text-align: center;
   margin-top: -40px;
   /* display: block; */
+  margin-top: 10px;
 }
 
 h1{
@@ -47,7 +49,7 @@ h1{
   align-items: center;
   margin-top: -10px; 
   background-color: rgb(61, 58, 58);
-  max-height: 400px;
+  max-height: 300px;
 }
 
 /* Optional: If you want to limit the width of the carousel */
@@ -63,10 +65,11 @@ h1{
 
 .date{
   font-family: Cursive, Helvetica, sans-serif;
-  margin-left: 10%;
+  margin-left: 15%;
+  font-size: 15px;
 }
 .carousel-item img {
-  max-width: 40%;
+  max-width: 30%;
   height: 100%; /* Ensure the image takes the full height of the container */
   object-fit: cover; /* Ensure the image covers the entire space */
 }
@@ -76,23 +79,11 @@ h1{
   padding: 20px; /* Add some padding for better readability */
   box-sizing: border-box; /* Include padding in width calculation */
   color: #e7dcdc;
+  margin-top: 20px;
 }
 
-/* .carousel .control-next.control-arrow,
-.carousel .control-next.control-arrow:hover {
-    background-color: black;
-    border: 2px solid red;
-    height: 60px;
-    border-radius: 10%;
-    transform: translateY(-50%);
-}
 
-.carousel .control-prev.control-arrow,
-.carousel .control-prev.control-arrow:hover {
-    background-color: black;
-    border: 2px solid red;
-    height: 60px;
-    border-radius: 10%; 
-    transform: translateY(-50%); 
-} */
+.desc{
+  margin-top: 20px;
+}
 
