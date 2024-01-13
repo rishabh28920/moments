@@ -18,7 +18,7 @@ export default function Register() {
         email,
         password
       })
-      res.data && window.location.href("https://moments-deployment.vercel.app/login");
+      res.data;
     }
     catch (err) {
       setError(true);
