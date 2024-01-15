@@ -19,6 +19,7 @@ export default function Login() {
         password: passwordRef.current.value,
       });
       dispatch(LoginSuccess(res.data));
+      window.location.replace("http://localhost:5173");
     } catch (err) {
       dispatch(LoginFailure());
     }

@@ -1,5 +1,6 @@
 .singlePost {
     flex: 9;
+    height: 850px;
   }
   
   .singlePostWrapper {
@@ -38,10 +39,30 @@
   }
   
   .singlePostEdit {
-    float: right;
+    /* display: flex; */
+    /* float: right; */
+    cursor: pointer;
     font-size: 16px;
   }
   
+  .singlePostEdit > div {
+    margin-right: 10px; /* Adjust the spacing between elements as needed */
+  }
+
+  .deletePost{
+    color: red;
+    display: flex;
+    float: right;
+  }
+
+  .editPost{
+    color: grey;
+    display: flex;
+    float: left;
+    margin-bottom: 20px;
+  }
+
+
   .singlePostIcon {
     margin-left: 10px;
     cursor: pointer;

@@ -9,6 +9,7 @@ export default function TopBar() {
 
   const handleLogout = () => {
     dispatch({ type: "LOGOUT" });
+    window.location.reload();
   };
   return (
     <div className="top">

@@ -13,7 +13,7 @@ function Header() {
         showIndicators={true}
         infiniteLoop={true}
         showThumbs={false}
-        autoPlay={true}
+        autoPlay={false}
         >
         <div className='carousel-item'>
           <img alt="Slide 1" src="https://media.tacdn.com/media/attractions-splice-spp-674x446/06/71/ae/2c.jpg" />
