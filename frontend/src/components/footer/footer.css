@@ -2,7 +2,7 @@ footer{
     margin-top: auto;
     background-color: #2f2f2f;
     padding: 20px;
-    width: 100%;
+    width: 97.6%;
 }
 
 p{
@@ -14,3 +14,9 @@ p{
     cursor: pointer;
     font-weight: 800;
 }
+
+@media screen and (max-width: 768px) {
+    footer {
+      width: 115%;
+    }
+  }

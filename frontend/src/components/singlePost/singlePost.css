@@ -1,6 +1,6 @@
 .singlePost {
     flex: 9;
-    height: 850px;
+    height: 115vh;
   }
   
   .singlePostWrapper {
@@ -117,4 +117,12 @@
     cursor: pointer;
     align-self: flex-end;
     margin-top: 20px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .singlePost {
+      height: 115vh;
+    }
+    
+    
   }

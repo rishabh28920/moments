@@ -1,5 +1,5 @@
 .post {
-    width: 385px;
+    width: 25%;
     margin: 50px 25px 40px 70px;
     display: flex;
     flex-direction: column;
@@ -54,4 +54,10 @@
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
+  }
+
+  @media screen and (max-width: 768px) {
+    .post {
+      width: 100%;
+    }
   }
