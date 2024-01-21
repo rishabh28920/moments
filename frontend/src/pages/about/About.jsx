@@ -6,7 +6,7 @@ function About() {
 
         <div class="container">
             <p class="card" style={{color: "black"}}>
-                Memories is a platform where a person can share his/her special moments with others and can explore others moments with a blink of a click
+                Moments is a platform where a person can share his/her special moments with others and can explore others moments with a blink of a click
             </p>
         </div>
 
