@@ -19,7 +19,7 @@ export default function Register() {
         password
       })
       res.data;
-      window.location.href("https://moments-deployment.vercel.app/login");
+      window.location.replace("https://moments-deployment.vercel.app/login");
     }
     catch (err) {
       setError(true);
