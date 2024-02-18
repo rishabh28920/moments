@@ -9,11 +9,20 @@ const categoryRoute = require("./routes/categories");
 const multer = require("multer");
 const path = require("path");
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 dotenv.config();
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the allowed HTTP methods
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}))
+app.use(cookieParser());
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname, "/images")));
+
+
 
 mongoose
   .connect(process.env.MONGO_URL, {

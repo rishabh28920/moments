@@ -13,13 +13,13 @@ export default function Register() {
     e.preventDefault();
     setError(false);
     try {
-      const res = await axios.post("https://moments-backend-one.vercel.app/api/auth/register", {
+      const res = await axios.post("http://localhost:5000/api/auth/register", {
         username,
         email,
         password
       })
       res.data;
-      window.location.replace("https://moments-deployment.vercel.app/login");
+      window.location.replace("http://localhost:5173/login");
     }
     catch (err) {
       setError(true);

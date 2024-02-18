@@ -1,6 +1,10 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const Post = require("../models/Post");
+const { authenticateToken } = require("../middlewares/authMiddleware");
+const { ObjectId } = require('mongodb');
+
+
 
 //CREATE POST
 router.post("/", async (req, res) => {
@@ -95,71 +99,92 @@ router.get("/", async (req, res) => {
   }
 });
 
-// router.put("/:id/like", async (req, res) => {
-//   try {
-//     const postId = req.params.id;
-//     const post = await Post.findById(postId);
 
-//     // Increment the like count
-//     const updatedLikes = (post.like || 0) + 1;
+router.put("/:id/like", authenticateToken, async (req, res) => {
+  try {
+    const postId = req.params.id;
+    const username = req.username;
+    const user = await User.findOne({ username });
+    const userId = new ObjectId(user._id);
+    const currentPostId = new ObjectId(postId);
 
-//     // Update the post with the new like count
-//     const updatedPost = await Post.findByIdAndUpdate(
-//       postId,
-//       { like: updatedLikes },
-//       { new: true }
-//     );
+    // Check if the user has already liked the post
+    const post = await Post.findById(postId);
+    if (post.likes.includes(user._id)) {
 
-//     res.status(200).json(updatedPost);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+      console.log("user has liked the post");
 
-// router.put("/:id/like", async (req, res) => {
-//   try {
-//     const postId = req.params.id;
-//     console.log(postId);
-//     const userId = req.user._id; // Assuming you have authentication middleware setting req.user
-//     console.log(userId)
+      console.log(`userId: ${user._id}`);
 
-//     // Check if the user has already liked the post
-//     const post = await Post.findById(postId);
-//     if (post.likes.includes(userId)) {
-//       return res.status(400).json({ error: "User already liked this post" });
-//     }
+      post.likes = post.likes.filter(likeId => likeId.toString() !== userId.toString());
 
-//     // Add user to the likes array in the post
-//     post.likes.push(userId);
-//     await post.save();
+      post.like=post.like-1;
 
-//     // Add the liked post to the user's likedPosts array
-//     const user = await User.findById(userId);
-//     user.likedPosts.push(postId);
-//     await user.save();
+    // Save the post with updated likes array
+      await post.save();
+      user.likedPosts = user.likedPosts.filter(currentPost => currentPost.toString() !== currentPostId.toString())
+      await user.save();
 
-//     res.status(200).json({ success: true });
-//   } catch (error) {
-//     console.error("Error updating like:", error);
-//     res.status(500).json({ success: false, error: "Internal Server Error" });
-//   }
-// });
+    }
+    else
+    {
+      console.log("user hasn't liked the post");
 
-// // Get like count
-// router.get("/:id/likes", async (req, res) => {
-//   try {
-//     const postId = req.params.id;
+      // Add user to the likes array in the post
+      post.likes.push(user._id);
+      post.like=post.like+1;
+      await post.save();
 
-//     // Fetch the post and return the like count
-//     const post = await Post.findById(postId);
-//     const likes = post ? post.like || 0 : 0;
+      console.log("user added to the likes array in the post")
 
-//     res.json({ likes });
-//   } catch (error) {
-//     console.error('Error fetching likes:', error);
-//     res.status(500).json({ success: false, error: 'Internal Server Error' });
-//   }
-// });
+      // Add the liked post to the user's likedPosts array
+      user.likedPosts.push(postId);
+      await user.save();
+    }
 
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error("Error updating like:", error);
+    res.status(500).json({ success: false, error: "Internal Server Error" });
+  }
+});
+
+// Get like count
+router.get("/:id/likes", async (req, res) => {
+  try {
+    const postId = req.params.id;
+
+    // Fetch the post and return the like count
+    const post = await Post.findById(postId);
+    const likes = post ? post.like || 0 : 0;
+
+    res.json({ likes });
+  } catch (error) {
+    console.error('Error fetching likes:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
+//check whether post already contain user
+router.get("/:userId/:postId", async (req, res) => {
+  try{
+
+    const postId = req.params.postId;
+    const userId = req.params.userId;
+
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    // Check if the user ID exists in the likes array
+    const isLiked = post.likes.includes(userId);
+
+    res.json({ isLiked });
+  } catch (error) {
+    console.error('Error checking like:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
 
 module.exports = router;

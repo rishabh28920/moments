@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const jwt = require('jsonwebtoken');
+
 
 //Register
 router.post("/register", async(req,res)=>{
@@ -44,7 +46,18 @@ router.post("/login", async (req, res) => {
 
         // Password validated, send response without the password field
         const { password, ...others } = user._doc;
-        res.status(200).json(others);
+        const username = req.body.username;
+
+        // console.log(`token: ${token}`);
+        const access_token = jwt.sign(username, process.env.TOKEN_SECRET);
+        // res.cookie('token', access_token, {
+        //     httpOnly: true,
+        //     // sameSite: 'none',
+        //     // secure: 'true'
+        // });
+        res.cookie('token',access_token,{httpOnly: true, secure: false})
+        .status(200)
+        .json({others, access_token})
     } catch (err) {
         console.log(err);
         res.status(500).json(err);

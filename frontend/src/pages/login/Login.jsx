@@ -14,14 +14,24 @@ export default function Login() {
     e.preventDefault();
     dispatch(LoginStart()); 
     try {
-      const res = await axios.post("https://moments-backend-one.vercel.app/api/auth/login", {
+      const res = await axios.post("http://localhost:5000/api/auth/login", {
         username: userRef.current.value,
         password: passwordRef.current.value,
+      },
+      {
+        withCredentials: true
       });
-      dispatch(LoginSuccess(res.data));
-      window.location.replace("/");
+      console.log(res.data);
+      dispatch(LoginSuccess(res.data.others));
+      const token = res.data.access_token;
+      console.log(token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      window.alert("Login Successful");
+      // console.log(res.data.others);
+      // window.location.replace("/");
     } catch (err) {
       dispatch(LoginFailure());
+      window.alert("Login Failure");
     }
   };
 
