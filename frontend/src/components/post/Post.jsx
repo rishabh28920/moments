@@ -7,7 +7,7 @@ import HeartOutline from "./HeartOutline";
 
 
 function Post({ post }) {
-    const PF = "http://localhost:5000/images/";
+    const PF = "https://moments-backend-one.vercel.app/images/";
     const [likes, setLikes] = useState(post.like || 0); // Initialize likes with the existing value or 0
     const { user } = useContext(Context);
 
@@ -21,11 +21,11 @@ function Post({ post }) {
         // Fetch the number of likes on page loading
         const fetchLikes = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/posts/${post._id}/likes`);
+                const response = await axios.get(`https://moments-backend-one.vercel.app/api/posts/${post._id}/likes`);
                 setLikes(response.data.likes);
                 if(user)
                 {
-                    const isLiked = await axios.get(`http://localhost:5000/api/posts/${user._id}/${post._id}`);
+                    const isLiked = await axios.get(`https://moments-backend-one.vercel.app/api/posts/${user._id}/${post._id}`);
                     if(isLiked.data.isLiked)
                     {
                         setIsActive(true);
@@ -51,7 +51,7 @@ function Post({ post }) {
             }
     
             // Check if the user has already liked the post
-            const isLiked = await axios.get(`http://localhost:5000/api/posts/${user._id}/${post._id}`);
+            const isLiked = await axios.get(`https://moments-backend-one.vercel.app/api/posts/${user._id}/${post._id}`);
             console.log(isLiked.data.isLiked);
             if(isLiked.data.isLiked)
             {
@@ -63,7 +63,7 @@ function Post({ post }) {
             }
     
             // Update the likes count on the backend
-            const response = await axios.put(`http://localhost:5000/api/posts/${post._id}/like`, { like: likes }, {
+            const response = await axios.put(`https://moments-backend-one.vercel.app/api/posts/${post._id}/like`, { like: likes }, {
                 withCredentials: true
             });
             // Update the likes count in the state

@@ -6,10 +6,10 @@ import axios from "axios";
 
 export default function TopBar() {
   const { user, dispatch } = useContext(Context);
-  const PF = "http://localhost:5000/images/"
+  const PF = "https://moments-backend-one.vercel.app/images/"
 
   const handleLogout = async (req,res) => {
-    const response = await axios.get('http://localhost:5000/api/auth/logout')
+    const response = await axios.get('https://moments-backend-one.vercel.app/api/auth/logout')
     dispatch({ type: "LOGOUT" });
     window.location.reload();
   };
