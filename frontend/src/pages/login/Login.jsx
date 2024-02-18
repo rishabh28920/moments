@@ -21,14 +21,8 @@ export default function Login() {
       {
         withCredentials: true
       });
-      console.log(res.data);
       dispatch(LoginSuccess(res.data.others));
-      const token = res.data.access_token;
-      console.log(token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      window.alert("Login Successful");
-      // console.log(res.data.others);
-      // window.location.replace("/");
+      window.location.replace("/");
     } catch (err) {
       dispatch(LoginFailure());
       window.alert("Login Failure");

@@ -26,8 +26,6 @@ function Post({ post }) {
                 if(user)
                 {
                     const isLiked = await axios.get(`http://localhost:5000/api/posts/${user._id}/${post._id}`);
-                    console.log(response.data);
-                    console.log(isLiked.data.isLiked);
                     if(isLiked.data.isLiked)
                     {
                         setIsActive(true);
@@ -48,7 +46,7 @@ function Post({ post }) {
     const handleLike = async () => {
         try {
             if (!user) {
-                console.log("Please login");
+                window.alert("Please login");
                 return;
             }
     
@@ -96,22 +94,13 @@ function Post({ post }) {
                 <span className="postDate">
                     {post.username}, {new Date(post.createdAt).toDateString()}
 
-                    {/* <IonIcon
-                        className={isActive ? 'heart active' : 'heart'}
-                        onClick={toggleHeart}
-                        icon={heart}
-                    ></IonIcon> */}
-
                     <HeartOutline
                         onClick={handleLike}
                         isActive={isActive}
                         color={'#00000'}
-                        // title={ }
                         height="25px"
                         width="25px"
                     />
-
-                    {/* <button className="like-button" onClick={handleLike}>Like</button> */}
                     <span className="like-count">{likes}</span>
                 </span>
                 <p className="postDesc">{post.desc}</p>

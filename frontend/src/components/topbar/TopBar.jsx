@@ -2,23 +2,19 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
 import "./topbar.css";
+import axios from "axios";
 
 export default function TopBar() {
   const { user, dispatch } = useContext(Context);
   const PF = "http://localhost:5000/images/"
 
-  const handleLogout = () => {
+  const handleLogout = async (req,res) => {
+    const response = await axios.get('http://localhost:5000/api/auth/logout')
     dispatch({ type: "LOGOUT" });
     window.location.reload();
   };
   return (
     <div className="top">
-      {/* <div className="topLeft">
-        <i className="topIcon fab fa-facebook-square"></i>
-        <i className="topIcon fab fa-twitter-square"></i>
-        <i className="topIcon fab fa-pinterest-square"></i>
-        <i className="topIcon fab fa-instagram-square"></i>
-      </div> */}
       <div className="topCenter">
         <ul className="topList">
           <li className="topListItem">
@@ -31,11 +27,6 @@ export default function TopBar() {
               ABOUT
             </Link>
           </li>
-          {/* <li className="topListItem">
-            <Link className="link" to="/">
-              CONTACT
-            </Link>
-          </li> */}
           <li className="topListItem">
             <Link className="link" to="/write">
               WRITE
@@ -65,7 +56,6 @@ export default function TopBar() {
             </li>
           </ul>
         )}
-        {/* <i className="topSearchIcon fas fa-search"></i> */}
       </div>
     </div>
   );

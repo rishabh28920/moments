@@ -46,9 +46,6 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
-    // console.log(`post : ${post}`);
-    // console.log(post.username);
-    // console.log(req.body.username)
     if (post.username === req.body.username) {
       try {
         await Post.deleteOne({ _id: post._id });
@@ -61,7 +58,6 @@ router.delete("/:id", async (req, res) => {
       res.status(401).json("You can delete only your post!");
     }
   } catch (err) {
-    // console.log("Failed while deleteing");
     res.status(500).json(err);
   }
 });
@@ -112,9 +108,6 @@ router.put("/:id/like", authenticateToken, async (req, res) => {
     const post = await Post.findById(postId);
     if (post.likes.includes(user._id)) {
 
-      console.log("user has liked the post");
-
-      console.log(`userId: ${user._id}`);
 
       post.likes = post.likes.filter(likeId => likeId.toString() !== userId.toString());
 
@@ -128,14 +121,11 @@ router.put("/:id/like", authenticateToken, async (req, res) => {
     }
     else
     {
-      console.log("user hasn't liked the post");
 
       // Add user to the likes array in the post
       post.likes.push(user._id);
       post.like=post.like+1;
       await post.save();
-
-      console.log("user added to the likes array in the post")
 
       // Add the liked post to the user's likedPosts array
       user.likedPosts.push(postId);
@@ -144,7 +134,6 @@ router.put("/:id/like", authenticateToken, async (req, res) => {
 
     res.status(200).json({ success: true });
   } catch (error) {
-    console.error("Error updating like:", error);
     res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 });
@@ -160,7 +149,6 @@ router.get("/:id/likes", async (req, res) => {
 
     res.json({ likes });
   } catch (error) {
-    console.error('Error fetching likes:', error);
     res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 });
@@ -182,7 +170,6 @@ router.get("/:userId/:postId", async (req, res) => {
 
     res.json({ isLiked });
   } catch (error) {
-    console.error('Error checking like:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 })
