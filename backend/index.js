@@ -13,7 +13,7 @@ const cookieParser = require('cookie-parser');
 
 dotenv.config();
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173','https://moments-deployment.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the allowed HTTP methods
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
