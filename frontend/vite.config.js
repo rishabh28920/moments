@@ -6,7 +6,7 @@ export default defineConfig({
   server:{
     // proxy: {
     //   '/api': {
-    //     target: 'https://moments-backend-one.vercel.app/',
+    //     target: 'https://moments-backend-one.vercel.app',
     //     changeOrigin: true,
     //     rewrite: (path) => path.replace(/^\/api/, '/api'),
     //   },

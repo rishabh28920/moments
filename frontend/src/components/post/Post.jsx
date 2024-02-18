@@ -3,51 +3,77 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Context } from "../../context/Context";
+import HeartOutline from "./HeartOutline";
+
 
 function Post({ post }) {
-    const PF = "https://moments-backend-one.vercel.app//images/";
+    const PF = "https://moments-backend-one.vercel.app/images/";
     const [likes, setLikes] = useState(post.like || 0); // Initialize likes with the existing value or 0
     const { user } = useContext(Context);
 
-    // useEffect(() => {
-    //     // Fetch the number of likes on page loading
-    //     const fetchLikes = async () => {
-    //         try {
-    //             const response = await axios.get(`https://moments-backend-one.vercel.app/api/posts/${post._id}/likes`);
-    //             setLikes(response.data.likes);
-    //         } catch (error) {
-    //             console.error("Error fetching likes:", error);
-    //         }
-    //     };
+    const [isActive, setIsActive] = useState(false);
 
-    //     fetchLikes();
-    // }, [post._id]);
+    function toggleHeart() {
+        setIsActive(!isActive); // Toggle the isActive state
+    }
 
-    // const handleLike = async () => {
-    //     try {
-    //         // Increment the count by 1
-    //         const newLikes = likes + 1;
+    useEffect(() => {
+        // Fetch the number of likes on page loading
+        const fetchLikes = async () => {
+            try {
+                const response = await axios.get(`https://moments-backend-one.vercel.app/api/posts/${post._id}/likes`);
+                setLikes(response.data.likes);
+                if(user)
+                {
+                    const isLiked = await axios.get(`https://moments-backend-one.vercel.app/api/posts/${user._id}/${post._id}`);
+                    if(isLiked.data.isLiked)
+                    {
+                        setIsActive(true);
+                    }
+                    else
+                    {
+                        setIsActive(false);
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching likes:", error);
+            }
+        };
 
-    //         if(user==null)
-    //         {
-    //             console.log("please login");
-    //             return;
-    //         }
+        fetchLikes();
+    }, [post._id]);
 
-    //         if (post.likes.includes(user._id)) {
-    //             console.log("You already liked this post");
-    //             return;
-    //           }
+    const handleLike = async () => {
+        try {
+            if (!user) {
+                window.alert("Please login");
+                return;
+            }
+    
+            // Check if the user has already liked the post
+            const isLiked = await axios.get(`https://moments-backend-one.vercel.app/api/posts/${user._id}/${post._id}`);
+            console.log(isLiked.data.isLiked);
+            if(isLiked.data.isLiked)
+            {
+                setIsActive(false);
+            }
+            else
+            {
+                setIsActive(true);
+            }
+    
+            // Update the likes count on the backend
+            const response = await axios.put(`https://moments-backend-one.vercel.app/api/posts/${post._id}/like`, { like: likes }, {
+                withCredentials: true
+            });
+            // Update the likes count in the state
+            setLikes(isLiked.data.isLiked ? likes - 1 : likes + 1);
+        } catch (error) {
+            console.error("Error updating like:", error);
+        }
+    };
+    
 
-    //         // Update the database with the new like count
-    //         await axios.put(`https://moments-backend-one.vercel.app/api/posts/${post._id}/like`, { like: newLikes });
-
-    //         // Update the state to reflect the new like count
-    //         setLikes(newLikes);
-    //     } catch (error) {
-    //         console.error("Error updating like:", error);
-    //     }
-    // };
 
     return (
         <div className="post">
@@ -67,11 +93,16 @@ function Post({ post }) {
                 </Link>
                 <span className="postDate">
                     {post.username}, {new Date(post.createdAt).toDateString()}
+
+                    <HeartOutline
+                        onClick={handleLike}
+                        isActive={isActive}
+                        color={'#00000'}
+                        height="25px"
+                        width="25px"
+                    />
+                    <span className="like-count">{likes}</span>
                 </span>
-                {/* <span>
-                    <button onClick={handleLike}>Like</button>
-                    {likes}
-                </span> */}
                 <p className="postDesc">{post.desc}</p>
             </div>
         </div>

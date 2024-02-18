@@ -17,11 +17,15 @@ export default function Login() {
       const res = await axios.post("https://moments-backend-one.vercel.app/api/auth/login", {
         username: userRef.current.value,
         password: passwordRef.current.value,
+      },
+      {
+        withCredentials: true
       });
-      dispatch(LoginSuccess(res.data));
+      dispatch(LoginSuccess(res.data.others));
       window.location.replace("/");
     } catch (err) {
       dispatch(LoginFailure());
+      window.alert("Login Failure");
     }
   };
 
