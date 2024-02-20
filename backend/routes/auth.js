@@ -47,14 +47,10 @@ router.post("/login", async (req, res) => {
         const { password, ...others } = user._doc;
         const username = req.body.username;
 
-        // console.log(`token: ${token}`);
         const access_token = jwt.sign(username, process.env.TOKEN_SECRET);
-        // console.log(`access token : ${access_token}`);
 
         res.cookie('token',access_token, {
-            // domain: '.vercel.app', // Root domain to allow subdomains to access the cookie
             path: '/', // Path for which the cookie is valid
-            // httpOnly: true, // Prevent client-side JavaScript from accessing the cookie
             secure: true, // Cookie will only be sent over HTTPS
             sameSite: 'None',
         })
