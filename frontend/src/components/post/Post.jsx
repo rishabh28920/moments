@@ -52,7 +52,6 @@ function Post({ post }) {
     
             // Check if the user has already liked the post
             const isLiked = await axios.get(`https://moments-backend-one.vercel.app/api/posts/${user._id}/${post._id}`);
-            console.log(isLiked.data.isLiked);
             if(isLiked.data.isLiked)
             {
                 setIsActive(false);
